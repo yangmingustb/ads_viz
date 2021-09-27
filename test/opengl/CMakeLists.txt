@@ -8,13 +8,16 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Gui REQUIRED)
+
+add_executable(lesson1 lesson01_createwindow/openglwindow.cpp
+                        lesson01_createwindow/main.cpp)
+target_link_libraries(lesson1 Qt5::Widgets Qt5::Gui Qt5::Core)
 
 
 
