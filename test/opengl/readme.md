@@ -19,3 +19,6 @@ https://blog.csdn.net/zchl159/article/details/51005467?locationNum=1&fps=1
 
 ## 一个qt opengl程序的基本骨架
 https://blog.csdn.net/webzhuce/article/details/78709704
+
+## paintevent()事件
+https://blog.csdn.net/u013928315/article/details/78195491

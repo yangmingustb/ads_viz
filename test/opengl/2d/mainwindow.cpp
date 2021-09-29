@@ -1,6 +1,6 @@
 ﻿#include "mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow2d::MainWindow2d(QWidget *parent)
 {
     // We must call setSurfaceType(QWindow::OpenGLSurface) to tell Qt we prefer
     // to use OpenGL to render the images to screen, instead of QPainter.
@@ -18,11 +18,11 @@ MainWindow::MainWindow(QWidget *parent)
     openGLFunctions = context->functions();
 }
 
-MainWindow::~MainWindow() {}
+MainWindow2d::~MainWindow2d() {}
 
-void MainWindow::initializeGL() { resizeGL(this->width(), this->height()); }
+void MainWindow2d::initializeGL() { resizeGL(this->width(), this->height()); }
 
-void MainWindow::resizeGL(int w, int h)
+void MainWindow2d::resizeGL(int w, int h)
 {
     // https://blog.csdn.net/jiangdf/article/details/8460012
     // Initialize Projection Matrix
@@ -34,7 +34,7 @@ void MainWindow::resizeGL(int w, int h)
     glOrtho(-1 * aspectRatio, 1 * aspectRatio, -1, 1, 1, -1);
 }
 
-void MainWindow::paintGL()
+void MainWindow2d::paintGL()
 {
     // The geometric primitive types supported by OpenGL are points, lines,
     // linestrips, line loops, polygons, quads, quad strips, triangles, triangle
@@ -70,9 +70,9 @@ void MainWindow::paintGL()
     glFlush(); // 强制刷新缓存
 }
 
-void MainWindow::paintEvent(QPaintEvent *event) { paintGL(); }
+void MainWindow2d::paintEvent(QPaintEvent *event) { paintGL(); }
 
-void MainWindow::resizeEvent(QResizeEvent *event)
+void MainWindow2d::resizeEvent(QResizeEvent *event)
 {
     resizeGL(this->width(), this->height());
     this->update();
