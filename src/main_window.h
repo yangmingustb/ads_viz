@@ -56,9 +56,6 @@ public:
     void TopologyChanged(const apollo::cyber::proto::ChangeMsg& change_msg);
     void AddNewWriter(const apollo::cyber::proto::RoleAttributes& role);
 
-    virtual void paintGL();
-    void paintEvent(QPaintEvent* event);
-
 protected:
     void resizeEvent(QResizeEvent*) override;
 
