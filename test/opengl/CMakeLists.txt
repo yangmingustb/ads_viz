@@ -15,9 +15,10 @@ find_package(Qt5OpenGL REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Gui REQUIRED)
 
-add_executable(lesson1 lesson01_createwindow/openglwindow.cpp
-                        lesson01_createwindow/main.cpp)
-target_link_libraries(lesson1 Qt5::Widgets Qt5::Gui Qt5::Core)
+add_executable(lesson1 2d/mainwindow.cpp
+                        2d/main.cpp)
+target_link_libraries(lesson1 Qt5::Widgets Qt5::Gui Qt5::Core ${OPENGL_LIBRARIES})
+
 
 
 
