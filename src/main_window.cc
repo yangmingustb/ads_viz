@@ -34,7 +34,7 @@ namespace
 const char* globalTreeItemStyle = "margin-right:10px";
 
 const char* aboutMessage =
-        "Cyber_Visualizer\n"
+        "ads_viz\n"
         "\n"
         "One Visualization Tool for Presenting Cyber Channel Data\n"
         "\n"
@@ -1447,3 +1447,45 @@ void MainWindow::showMessage()
         msg_dialog_->show();
     }
 }
+
+void MainWindow::paintGL()
+{
+    // Initialize clear color (cornflower blue)
+    glClearColor(0.39f, 0.58f, 0.93f, 1.f);
+    // Clear color buffer
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    ///
+    /// \brief glFlush
+
+    // Reset modelview matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glBegin(GL_LINES);
+    glVertex3f(+1.0, +1.0, -1.0);
+    glVertex3f(-1.0, +1.0, -1.0);
+    glVertex3f(+1.0, -1.0, -1.0);
+    glVertex3f(-1.0, -1.0, -1.0);
+    glVertex3f(+1.0, -1.0, +1.0);
+    glVertex3f(-1.0, -1.0, +1.0);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(+1.0, +1.0, +1.0);
+    glVertex3f(+1.0, +1.0, -1.0);
+    glVertex3f(+1.0, -1.0, -1.0);
+    glVertex3f(+1.0, -1.0, +1.0);
+    glVertex3f(+1.0, +1.0, +1.0);
+    glVertex3f(-1.0, +1.0, +1.0);
+    glVertex3f(-1.0, +1.0, -1.0);
+    glVertex3f(-1.0, -1.0, -1.0);
+    glVertex3f(-1.0, -1.0, +1.0);
+    glVertex3f(-1.0, +1.0, +1.0);
+    glEnd();
+
+    glFlush();
+}
+
+void MainWindow::paintEvent(QPaintEvent *event) { paintGL(); }

@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>CyberVisualizer</string>
+   <string>ads_viz</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res.qrc">

@@ -20,7 +20,7 @@
    <item>
     <widget class="QLabel" name="msgLabel">
      <property name="text">
-      <string>CyberVisualizer
+      <string>ads_viz
 
 One Visualization Tool for Presenting Cyber Channel Data
 

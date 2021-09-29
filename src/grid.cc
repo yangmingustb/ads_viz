@@ -18,27 +18,32 @@
 
 Grid::Grid(int cellCountBySide)
     : RenderableObject((cellCountBySide << 2) + 4, 2),
-      grid_color_(128, 128, 128) {}
+      grid_color_(128, 128, 128)
+{
+}
 
-bool Grid::FillVertexBuffer(GLfloat* pBuffer) {
-  float x = static_cast<float>(CellCount()) / 2.0f;
-  float z;
+bool Grid::FillVertexBuffer(GLfloat* pBuffer)
+{
+    float x = static_cast<float>(CellCount()) / 2.0f;
+    float z;
 
-  for (z = -x; z <= x; ++z) {
-    *pBuffer++ = -x;
-    *pBuffer++ = z;
-    *pBuffer++ = x;
-    *pBuffer++ = z;
-  }
+    for (z = -x; z <= x; ++z)
+    {
+        *pBuffer++ = -x;
+        *pBuffer++ = z;
+        *pBuffer++ = x;
+        *pBuffer++ = z;
+    }
 
-  z = x;
+    z = x;
 
-  for (x = -z; x <= z; ++x) {
-    *pBuffer++ = x;
-    *pBuffer++ = -z;
-    *pBuffer++ = x;
-    *pBuffer++ = z;
-  }
+    for (x = -z; x <= z; ++x)
+    {
+        *pBuffer++ = x;
+        *pBuffer++ = -z;
+        *pBuffer++ = x;
+        *pBuffer++ = z;
+    }
 
-  return true;
+    return true;
 }
