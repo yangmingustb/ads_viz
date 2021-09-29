@@ -67,7 +67,7 @@ void MainWindow::paintGL()
     glVertex2f(-0.8f, -0.5f);
     glEnd();
 
-    glFlush();
+    glFlush(); // 强制刷新缓存
 }
 
 void MainWindow::paintEvent(QPaintEvent *event) { paintGL(); }
