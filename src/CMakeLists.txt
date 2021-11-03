@@ -17,7 +17,8 @@ find_package(Qt5Gui REQUIRED)
 
 
 add_executable(ads_viz  main.cc
-                        utils.cc)
+                        utils.cc
+                        viewer.cc)
 target_link_libraries(ads_viz   Qt5::Widgets
                                 Qt5::Gui
                                 Qt5::Core

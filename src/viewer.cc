@@ -207,7 +207,7 @@ void Viewer::createText(osg::Transform* tf,
                         const osg::Vec4& color)
 {
     osg::Geode* geode = new osg::Geode();
-    std::string timesFont("fonts/arial.ttf");
+    // std::string timesFont("fonts/arial.ttf");
     osg::ref_ptr<osg::PolygonOffset> polyoffset = new osg::PolygonOffset;
 
     osg::StateSet *state = geode->getOrCreateStateSet();
@@ -220,7 +220,7 @@ void Viewer::createText(osg::Transform* tf,
         osgText::Text* text = new  osgText::Text;
         geode->addDrawable( text );
 
-        text->setFont(timesFont);
+        // text->setFont(timesFont);
         text->setPosition(pos);
         text->setFontResolution(40,40);
         text->setColor(color);

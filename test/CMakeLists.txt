@@ -58,3 +58,19 @@ PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${proto_file})
 add_executable(proto_test hello_proto/test_proto.cc  ${PROTO_SRCS} ${PROTO_HDRS})
 target_link_libraries(proto_test ${PROTOBUF_LIBRARIES})
 
+add_executable(qt_osg_test test_osg/osg_qt_test.cc
+                            ../../src/viewer.cc
+                            ../../src/utils.cc
+                            )
+target_link_libraries(qt_osg_test Qt5::Widgets Qt5::Gui Qt5::Core  ${OPENGL_LIBRARIES}
+                                    Eigen3::Eigen 
+                                    osg
+                                    osgUtil
+                                    osgDB
+                                    osgText
+                                    osgGA
+                                    osgFX
+                                    osgSim
+                                    osgViewer
+                                    osgManipulator)
+
