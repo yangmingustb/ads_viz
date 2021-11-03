@@ -22,8 +22,8 @@ include_directories(
     )
 include(GNUInstallDirs)
 
-# find_package(OpenSceneGraph REQUIRED COMPONENTS
-    # osgUtil osgDB osgText osgGA osgFX osgSim osgViewer osg osgManipulator CONFIG)
+find_package(OpenSceneGraph 3.6.4 REQUIRED COMPONENTS
+    osgUtil osgDB osgText osgGA osgFX osgSim osgViewer osg osgManipulator)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
@@ -38,6 +38,3 @@ find_package(Threads)
 add_subdirectory(test)
 add_subdirectory(src)
 add_subdirectory(third_party)
-
-install(DIRECTORY include/ DESTINATION include/)
-

@@ -7,7 +7,7 @@ set(CMAKE_BUILD_TYPE Release)
 add_subdirectory(googletest)
 add_subdirectory(benchmark)
 # add_subdirectory(glog)
-add_subdirectory(OpenSceneGraph)
+# add_subdirectory(OpenSceneGraph)
 
 
 
