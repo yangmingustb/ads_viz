@@ -16,23 +16,18 @@ find_package(Qt5Xml REQUIRED)
 find_package(Qt5Gui REQUIRED)
 
 
-add_executable(ads_viz  main.cc
-                        utils.cc)
-target_link_libraries(ads_viz   Qt5::Widgets
+add_library(ads_viz osg_utils.cc
+                    viz.cc)
+target_include_directories(ads_viz PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(ads_viz PUBLIC Qt5::Widgets
                                 Qt5::Gui
                                 Qt5::Core
                                 ${OPENGL_LIBRARIES}
-                                Eigen3::Eigen 
-                                osg
-                                osgUtil
-                                osgDB
-                                osgText
-                                osgGA
-                                osgFX
-                                osgSim
-                                osgViewer
-                                osgManipulator
+                                Eigen3::Eigen
                                 ${OPENSCENEGRAPH_LIBRARIES})
+
+add_executable(main_cat  main.cc)
+target_link_libraries(main_cat  ads_viz)
 
 
 
