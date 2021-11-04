@@ -5,4 +5,3 @@
 #include <memory>
 #include <qt5/QtWidgets/QLabel>
 #include <qt5/QtWidgets/QWidget>
-#include <viewer.h>

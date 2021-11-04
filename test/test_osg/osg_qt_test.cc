@@ -1,21 +1,3 @@
-/*
- * =====================================================================================
- *
- *       Filename:  main.cpp
- *
- *    Description: Minimalistic project example that uses both Qt and
- * OpenSceneGraph libraries.
- *
- *        Version:  1.0
- *        Created:  30-Jun-16 10:23:06 AM
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  Victoria Rudakova (vicrucann@gmail.com),
- *   Organization:  vicrucann.github.io
- *
- * =====================================================================================
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -53,7 +35,6 @@
 #include <QWindow>
 #include <QtGlobal>
 
-#include <viewer.h>
 #include <osg/Camera>
 #include <osg/Material>
 #include <osg/ShapeDrawable>
@@ -63,8 +44,9 @@
 #include <osgGA/TrackballManipulator>
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/Viewer>
+#include <osgViewer/ViewerBase>
 
-class QtOSGWidget : public QOpenGLWidget
+class QtOSGWidgetTest : public QOpenGLWidget
 {
 private:
     osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> m_window;
@@ -80,7 +62,7 @@ private:
     }
 
 public:
-    QtOSGWidget(QWidget* parent = 0)
+    QtOSGWidgetTest(QWidget* parent = 0)
         : QOpenGLWidget(parent),
           m_window(new osgViewer::GraphicsWindowEmbedded(
                   this->x(), this->y(), this->width(), this->height())),
@@ -88,8 +70,6 @@ public:
           m_scale(QApplication::desktop()->devicePixelRatio())
     {
         m_camera = new osg::Camera;
-
-        // this->setMinimumSize(1000, 800);  // 主窗口初始化
 
         osg::Cylinder* cylinder =
                 new osg::Cylinder(osg::Vec3(0.f, 0.f, 0.f), 0.25f, 0.5f);
@@ -117,7 +97,7 @@ public:
         m_viewer->realize();
     }
 
-    virtual ~QtOSGWidget() {}
+    virtual ~QtOSGWidgetTest() {}
 
 protected:
     virtual void paintGL() { m_viewer->frame(); }
@@ -219,7 +199,7 @@ int main(int argc, char** argv)
     QApplication qapp(argc, argv);
     QMainWindow window;
 	window.setMinimumSize(900, 600);
-    QtOSGWidget* widget = new QtOSGWidget(&window);
+    QtOSGWidgetTest* widget = new QtOSGWidgetTest(&window);
     window.setCentralWidget(widget);
     window.show();
 
