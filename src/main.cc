@@ -1,4 +1,4 @@
-﻿#include "viz.h"
+﻿#include <viz.h>
 #include <iostream>
 #include <qt5/QtWidgets/QApplication>
 #include <qt5/QtWidgets/QMainWindow>

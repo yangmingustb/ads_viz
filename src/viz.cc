@@ -1,4 +1,4 @@
-#include "viz.h"
+#include <viz.h>
 
 namespace cat
 {
@@ -30,6 +30,10 @@ QtOSGWidget::QtOSGWidget(QWidget *parent)
     m_root->addChild(m_base_tf);
     createAxis(m_base_tf, 5, 0.05, 1);
     createWireFrameBox(m_base_tf, osg::Vec3(10, 10, 10), osg::Vec3(4, 6, 8), red, 1.0);
+
+    osg::ref_ptr<osg::MatrixTransform> veh_tf;
+    veh_tf = new osg::MatrixTransform;
+    createGridPlane(veh_tf, osg::Vec3(0, 0, 0), green, 1.0, 100.0, 100.0);
 
     m_camera->setViewport(0, 0, this->width(), this->height());
     m_camera->setClearColor(osg::Vec4(0.39f, 0.58f, 0.93f, 1.f));
@@ -592,6 +596,53 @@ void QtOSGWidget::createWireFrameBox(osg::Transform *tf, const osg::Vec3 &center
     createLine(tf, box_lines->at(2), box_lines->at(5), color, line_width);
     createLine(tf, box_lines->at(0), box_lines->at(3), color, line_width);
     createLine(tf, box_lines->at(4), box_lines->at(7), color, line_width);
+}
+
+void QtOSGWidget::createGridPlane(osg::Transform *tf, const osg::Vec3 &center,
+        const osg::Vec4 &color, const double &line_width, const double &width, const double &hight)
+{
+    osg::Vec3 start, end;
+    double half_width, half_height;
+
+    half_width = width * 0.5;
+    half_height = hight * 0.5;
+
+    start = center;
+    start.x() -= half_width;
+    start.y() -= half_height;
+    end=center;
+    end.x() += half_width;
+    end.y() += half_height;
+
+    createRectangle(tf, end, start, color, line_width);
+
+    double step = 5.0;
+
+    osg::Vec3 line_start = start;
+    line_start[0] += step;
+
+    osg::Vec3 line_end = line_start;
+    line_end[1] = end[1];
+
+    while (line_start[0] < end[0])
+    {
+        createLine(tf, line_start, line_end, color, line_width);
+        line_start[0] += step;
+        line_end[0] += step;
+    }
+
+    line_start = start;
+    line_start[1] += step;
+
+    line_end = line_start;
+    line_end[0] = end[0];
+
+    while (line_start[1] < end[1])
+    {
+        createLine(tf, line_start, line_end, color, line_width);
+        line_start[1] += step;
+        line_end[1] += step;
+    }
 }
 
 void QtOSGWidget::createPolygon(

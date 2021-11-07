@@ -16,10 +16,10 @@ find_package(Qt5Xml REQUIRED)
 find_package(Qt5Gui REQUIRED)
 
 
-add_library(ads_viz osg_utils.cc
+add_library(viz_lib osg_utils.cc
                     viz.cc)
-target_include_directories(ads_viz PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(ads_viz PUBLIC Qt5::Widgets
+target_include_directories(viz_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(viz_lib PUBLIC Qt5::Widgets
                                 Qt5::Gui
                                 Qt5::Core
                                 ${OPENGL_LIBRARIES}
@@ -27,7 +27,7 @@ target_link_libraries(ads_viz PUBLIC Qt5::Widgets
                                 ${OPENSCENEGRAPH_LIBRARIES})
 
 add_executable(main_cat  main.cc)
-target_link_libraries(main_cat  ads_viz)
+target_link_libraries(main_cat  viz_lib)
 
 
 

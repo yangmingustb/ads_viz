@@ -1,6 +1,6 @@
 # 自动驾驶系统的可视化
 
-qt作为交互界面，opengl作为可视化API.
+qt作为交互界面，open scene graph作为可视化API.
 
 # 依赖
 * ubuntu 16.04
@@ -10,7 +10,7 @@ qt作为交互界面，opengl作为可视化API.
 * google test 1.11.0
 * glog 0.50
 * benchmark 1.6.0
-* openscenegraph 3.2.1
+* openscenegraph 3.6.4
 
 # opengl
 - [LearnOpenGL-CN github 链接](https://github.com/LearnOpenGL-CN/LearnOpenGL-CN)

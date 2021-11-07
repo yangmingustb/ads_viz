@@ -158,6 +158,9 @@ public:
 
     void setDisplayData() { m_viewer->setSceneData(m_root.get()); }
 
+    void createGridPlane(osg::Transform *tf, const osg::Vec3 &center, const osg::Vec4 &color,
+            const double &line_width, const double &width, const double &hight);
+
 private:
     osgGA::EventQueue *getEventQueue() const;
 };
