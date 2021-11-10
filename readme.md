@@ -15,3 +15,6 @@ qt作为交互界面，open scene graph作为可视化API.
 # opengl
 - [LearnOpenGL-CN github 链接](https://github.com/LearnOpenGL-CN/LearnOpenGL-CN)
 - [LearnOpenGL-CN docs 链接](https://learnopengl-cn.github.io/)
+
+## 
+![frame](./resource/frame_base.png)
