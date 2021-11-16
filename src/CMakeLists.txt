@@ -30,7 +30,11 @@ add_executable(main_cat  main.cc)
 target_link_libraries(main_cat  viz_lib)
 
 add_executable(map_test  map.cc)
-target_link_libraries(map_test  lanelet2)
+target_link_libraries(map_test  lanelet2
+                                boost_system
+                                boost_filesystem
+                                boost_serialization
+                                )
 
 
 

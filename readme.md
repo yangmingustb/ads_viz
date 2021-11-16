@@ -42,3 +42,6 @@ qt作为交互界面，open scene graph作为可视化API.
 
 ## 坐标系
 - [地理坐标系,投影坐标系](https://zhuanlan.zhihu.com/p/379610875)
+
+# 开发建议
+禁止使用boost相关的代码，兼容性太差了，经常编译不了

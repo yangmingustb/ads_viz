@@ -2,47 +2,64 @@
 #include <lanelet2_io/Io.h>
 #include <lanelet2_io/io_handlers/Factory.h>
 #include <lanelet2_io/io_handlers/Writer.h>
+#include <lanelet2_io/io_handlers/OsmHandler.h>
+#include <lanelet2_io/io_handlers/BinHandler.h>
 #include <lanelet2_projection/UTM.h>
 #include <map.h>
 #include <cstdio>
 
-namespace
-{
-std::string exampleMapPath = "../third_party/Lanelet2/lanelet2_maps/res/mapping_example.osm";
-
 std::string tempfile(const std::string& name)
 {
-    char tmpDir[] = "/tmp/lanelet2_example_XXXXXX";
+    char tmpDir[] = "/tmp/lanelet2_mapXXXXXX";
+    printf("temp \n");
     auto* file = mkdtemp(tmpDir);
     if (file == nullptr)
     {
         throw lanelet::IOError("Failed to open a temporary file for writing");
     }
+    std::cout << std::string(file) + '/' + name << std::endl;
     return std::string(file) + '/' + name;
 }
-}  // namespace
 
 void part1LoadingAndWriting()
 {
     using namespace lanelet;
+    std::string exampleMapPath = "/home/uisee/desktop/ads_viz/third_party/Lanelet2/lanelet2_maps/"
+                                 "res/mapping_example.osm";
+
+    // register with factories
+    io_handlers::RegisterParser<lanelet::io_handlers::OsmParser> reg_osm_parser;
+
+    // register with factories
+    io_handlers::RegisterWriter<io_handlers::OsmWriter> reg_osm_writer;
+
+    // register with factories
+    io_handlers::RegisterParser<io_handlers::BinParser> reg_bin_parser;
+    io_handlers::RegisterWriter<io_handlers::BinWriter> reg_bin_writer;
+
     // loading a map requires two things: the path and either an origin or a projector that does the
     // lat/lon->x/y conversion.
     projection::UtmProjector projector(Origin({49, 8.4}));  // we will go into details later
-    LaneletMapPtr map = load(exampleMapPath, projector);
+    lanelet::ErrorMessages errors;
+    io::Configuration params;
+    LaneletMapPtr map = load(exampleMapPath, projector, &errors, params);
 
     // the load and write functions are agnostic to the file extension. Depending on the extension,
     // a different loading algorithm will be chosen. Here we chose osm.
-
+    printf("0\n");
     // we can also load and write into an internal binary format. It is not human readable but
     // loading is much faster than from .osm:
-    write(tempfile("map.bin"), *map);  // we do not need a projector to write to bin
 
+    std::string file_name = tempfile("map.bin");
+    std::cout << file_name << std::endl;
+    write(file_name, *map);  // we do not need a projector to write to bin
+    printf("1\n");
     // if the map could not be parsed, exceptoins are thrown. Alternatively, you can provide an
     // error struct. Then lanelet2 will load the map as far as possible and write all the errors
     // that occured to the error object that you passed:
-    ErrorMessages errors;
     map = load(exampleMapPath, projector, &errors);
     assert(errors.empty());  // of no errors occurred, the map could be fully parsed.
+    printf("2\n");
 }
 
 int main()

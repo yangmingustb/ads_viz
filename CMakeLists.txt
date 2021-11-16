@@ -33,6 +33,8 @@ find_package(OpenGL REQUIRED)
 find_package(Protobuf REQUIRED)
 find_package(Eigen3 3 REQUIRED)
 find_package(Threads)
+find_package(Boost)
+include_directories(${Boost_INCLUDE_DIR})
 
 
 add_subdirectory(test)

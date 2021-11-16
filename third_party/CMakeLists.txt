@@ -3,11 +3,6 @@ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_BUILD_TYPE Release)
 
-find_package(Boost)
-if (Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIR})
-endif()
-
 find_package(GeographicLib)
 include_directories(${GeographicLib_INCLUDE_DIRS})
 
@@ -38,10 +33,8 @@ file(GLOB LANELET_FILE
           Lanelet2/lanelet2_traffic_rules/include/lanelet2_traffic_rules/*.h
           Lanelet2/lanelet2_traffic_rules/src/*.cpp
         )
-
-add_library(lanelet2
-  ${LANELET_FILE}
-  )
+add_library(lanelet2 ${LANELET_FILE}
+          )
 target_include_directories(lanelet2
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Lanelet2/lanelet2_core/include/>
@@ -51,10 +44,12 @@ target_include_directories(lanelet2
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Lanelet2/lanelet2_routing/include/>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Lanelet2/lanelet2_traffic_rules/include/>
   )
-target_link_libraries(lanelet2 PUBLIC ${Boost_LIBRARIES}
+target_link_libraries(lanelet2  PUBLIC ${Boost_LIBRARIES}
                                 Eigen3::Eigen
                                 pugixml
-                                ${GeographicLib_LIBRARIES})
+                                ${GeographicLib_LIBRARIES}
+                                boost_system
+                                boost_filesystem)
 
 add_subdirectory(googletest)
 # add_subdirectory(benchmark)
