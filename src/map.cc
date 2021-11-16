@@ -11,7 +11,6 @@
 std::string tempfile(const std::string& name)
 {
     char tmpDir[] = "/tmp/lanelet2_mapXXXXXX";
-    printf("temp \n");
     auto* file = mkdtemp(tmpDir);
     if (file == nullptr)
     {
@@ -27,6 +26,7 @@ void part1LoadingAndWriting()
     std::string exampleMapPath = "/home/uisee/desktop/ads_viz/third_party/Lanelet2/lanelet2_maps/"
                                  "res/mapping_example.osm";
 
+    // init
     // register with factories
     io_handlers::RegisterParser<lanelet::io_handlers::OsmParser> reg_osm_parser;
 
@@ -44,22 +44,21 @@ void part1LoadingAndWriting()
     io::Configuration params;
     LaneletMapPtr map = load(exampleMapPath, projector, &errors, params);
 
+    printf("lanelet size[%d]\n", int32_t(map->laneletLayer.size()));
+
     // the load and write functions are agnostic to the file extension. Depending on the extension,
     // a different loading algorithm will be chosen. Here we chose osm.
-    printf("0\n");
     // we can also load and write into an internal binary format. It is not human readable but
     // loading is much faster than from .osm:
 
     std::string file_name = tempfile("map.bin");
     std::cout << file_name << std::endl;
     write(file_name, *map);  // we do not need a projector to write to bin
-    printf("1\n");
     // if the map could not be parsed, exceptoins are thrown. Alternatively, you can provide an
     // error struct. Then lanelet2 will load the map as far as possible and write all the errors
     // that occured to the error object that you passed:
     map = load(exampleMapPath, projector, &errors);
     assert(errors.empty());  // of no errors occurred, the map could be fully parsed.
-    printf("2\n");
 }
 
 int main()

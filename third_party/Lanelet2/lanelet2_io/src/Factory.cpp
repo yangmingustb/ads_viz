@@ -49,8 +49,6 @@ Parser::Ptr ParserFactory::createFromExtension(
 {
     ParserFactory& inst = ParserFactory::instance();
     auto it = inst.extensionRegistry_.find(extension);
-    std::cout << extension << std::endl;
-    std::cout << inst.extensionRegistry_.size() << std::endl;
 
     if (it != inst.extensionRegistry_.end())
     {
