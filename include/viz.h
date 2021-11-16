@@ -49,6 +49,7 @@
 #include <osgGA/TrackballManipulator>
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/Viewer>
+#include <map.h>
 
 namespace cat
 {
@@ -76,6 +77,8 @@ private:
     osg::TessellationHints *m_global_hints;
     osg::ref_ptr<osg::MatrixTransform> m_base_tf;
     osg::ref_ptr<osgGA::TrackballManipulator> m_manipulator;
+
+    const HDMap *m_map;
 
 public:
     QtOSGWidget(QWidget *parent = 0);
@@ -160,6 +163,8 @@ public:
 
     void createGridPlane(osg::Transform *tf, const osg::Vec3 &center, const osg::Vec4 &color,
             const double &line_width, const double &width, const double &hight);
+
+    void loadHDMap(const HDMap *map);
 
 private:
     osgGA::EventQueue *getEventQueue() const;

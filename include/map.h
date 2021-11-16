@@ -1,14 +1,18 @@
 #pragma once
+#include <lanelet2_core/primitives/Lanelet.h>
 
 namespace cat
 {
-class Map
+class HDMap
 {
 private:
-    /* data */
+    lanelet::LaneletMapPtr map;
 public:
-    Map(/* args */);
-    ~Map();
+    HDMap(/* args */) = default;
+    ~HDMap() = default;
+
+    void init();
+    std::string generateTempFileName(const std::string& name);
 };
 
 }  // namespace cat

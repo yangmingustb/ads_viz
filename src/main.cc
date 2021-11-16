@@ -2,6 +2,7 @@
 #include <iostream>
 #include <qt5/QtWidgets/QApplication>
 #include <qt5/QtWidgets/QMainWindow>
+#include <map.h>
 
 int main(int argc, char **argv)
 {
@@ -15,6 +16,12 @@ int main(int argc, char **argv)
     QMainWindow window;
     window.setMinimumSize(900, 600);
     cat::QtOSGWidget *widget = new cat::QtOSGWidget(&window);
+
+    cat::HDMap hd_map;
+    hd_map.init();
+
+    widget->loadHDMap(&hd_map);
+
     window.setCentralWidget(widget);
     window.show();
 

@@ -803,4 +803,9 @@ void QtOSGWidget::createChildAxis(
     m_root->addChild(tf);
 }
 
+void QtOSGWidget::loadHDMap(const HDMap *map)
+{
+    m_map = map;
+}
+
 }  // namespace cat
