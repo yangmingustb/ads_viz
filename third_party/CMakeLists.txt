@@ -51,12 +51,12 @@ target_include_directories(lanelet2
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Lanelet2/lanelet2_routing/include/>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Lanelet2/lanelet2_traffic_rules/include/>
   )
-target_link_libraries(lanelet2 ${Boost_LIBRARIES}
+target_link_libraries(lanelet2 PUBLIC ${Boost_LIBRARIES}
                                 Eigen3::Eigen
                                 pugixml
                                 ${GeographicLib_LIBRARIES})
 
 add_subdirectory(googletest)
-add_subdirectory(benchmark)
+# add_subdirectory(benchmark)
 
 

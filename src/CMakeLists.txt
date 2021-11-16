@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_BUILD_TYPE Release)
 
 set(CMAKE_AUTOMOC ON)
@@ -28,6 +28,9 @@ target_link_libraries(viz_lib PUBLIC Qt5::Widgets
 
 add_executable(main_cat  main.cc)
 target_link_libraries(main_cat  viz_lib)
+
+add_executable(map_test  map.cc)
+target_link_libraries(map_test  lanelet2)
 
 
 
