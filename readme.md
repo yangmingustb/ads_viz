@@ -10,7 +10,12 @@ qt作为交互界面，open scene graph作为可视化API.
 * glog 0.50
 * benchmark 1.6.0
 * openscenegraph 3.6.4
-* Lanelet2
+* Lanelet2 (直接使用cmake编译不了，需要手动更改一些路径)
+* Boost 1.58
+* c++ 14
+* pugixml 1.11.4
+* geographiclib 1.45-2
+
 
 # opengl
 - [LearnOpenGL-CN github 链接](https://github.com/LearnOpenGL-CN/LearnOpenGL-CN)
@@ -31,3 +36,9 @@ qt作为交互界面，open scene graph作为可视化API.
 总而言之，基于参考线的道路表示法在数据的存储过程中和还原过程中，可能会存在着数据损失，并且一部分
 数据对对另一些数据的的稍微变化非常敏感，所以这种地图格式不是很好。所以我选择了Lanelet2这种无损的数据
 格式地图。
+
+## Lanelet2
+- [Lanelet2介绍](http://www.xchu.net/2020/02/25/42lanelet2-codeparsing/)
+
+## 坐标系
+- [地理坐标系,投影坐标系](https://zhuanlan.zhihu.com/p/379610875)

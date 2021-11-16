@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <qt5/QtWidgets/QLabel>
+#include <iostream>
+#include <vector>
 
 // model-view-control, design mode
 int main(int argc, char *argv[])

@@ -19,10 +19,13 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Gui REQUIRED)
+find_package(Threads)
 
 
 add_executable(hello_qt hello_qt.cc)
-target_link_libraries(hello_qt Qt5::Widgets)
+target_link_libraries(hello_qt Qt5::Widgets
+                                # Threads::Threads
+                                )
 
 add_executable(hello_string hello_string.cc)
 target_link_libraries(hello_string Qt5::Widgets)
