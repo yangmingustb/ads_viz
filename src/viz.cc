@@ -1,4 +1,8 @@
 #include <viz.h>
+#include "osg_camera_control.h"
+#include <osgGA/FlightManipulator>
+#include <osgGA/DriveManipulator>
+#include <osgGA/TerrainManipulator>
 
 namespace cat
 {
@@ -45,9 +49,26 @@ QtOSGWidget::QtOSGWidget(QWidget *parent)
 
     m_manipulator->setAllowThrow(false);
     this->setMouseTracking(true);
-    m_viewer->setCameraManipulator(m_manipulator);
+
+    //******************************** MANIPULATORS
+    // set up the camera manipulators.
+    osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keyswitchManipulator =
+            new osgGA::KeySwitchMatrixManipulator;
+
+
+    keyswitchManipulator->addMatrixManipulator('1', "Trackball", new osgGA::TrackballManipulator());
+    keyswitchManipulator->addMatrixManipulator('2', "Flight", new osgGA::FlightManipulator());
+    keyswitchManipulator->addMatrixManipulator('3', "Drive", new osgGA::DriveManipulator());
+    keyswitchManipulator->addMatrixManipulator('4', "Terrain", new osgGA::TerrainManipulator());
+    keyswitchManipulator->addMatrixManipulator('6', "Own2", new OSGCameraControls());
+
+    m_viewer->setCameraManipulator(keyswitchManipulator.get());
+
+    // m_viewer->setCameraManipulator(m_manipulator);
     m_viewer->setThreadingModel(osgViewer::Viewer::SingleThreaded);
     m_viewer->realize();
+
+    m_viewer->setUpViewInWindow(100, 100, 900, 900);
 }
 
 QtOSGWidget::~QtOSGWidget() {}
@@ -60,6 +81,10 @@ void QtOSGWidget::resizeGL(int width, int height)
     osg::Camera *camera = m_viewer->getCamera();
     camera->setViewport(0, 0, this->width() * m_scale, this->height() * m_scale);
     createAxis(m_base_tf, 5, 0.05, 1);
+    // if(m_map)
+    // {
+    //     drawLanelet();
+    // }
 }
 
 void QtOSGWidget::initializeGL()
@@ -70,6 +95,10 @@ void QtOSGWidget::initializeGL()
     m_global_state_set->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);
 
     createAxis(m_base_tf, 5, 0.05, 1);
+    if (m_map)
+    {
+        drawLanelet();
+    }
 }
 
 void QtOSGWidget::mouseMoveEvent(QMouseEvent *event)
@@ -97,6 +126,15 @@ void QtOSGWidget::mousePressEvent(QMouseEvent *event)
     this->getEventQueue()->mouseButtonPress(event->x() * m_scale, event->y() * m_scale, button);
 }
 
+void QtOSGWidget::keyPressEvent(QKeyEvent *event)
+{
+    grabKeyboard();
+    if (event->key() == Qt::Key::Key_Space)
+    {
+        this->getEventQueue()->keyPress(osgGA::GUIEventAdapter::KEY_Escape);
+    }
+}
+
 void QtOSGWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     unsigned int button = 0;
@@ -115,6 +153,15 @@ void QtOSGWidget::mouseReleaseEvent(QMouseEvent *event)
             break;
     }
     this->getEventQueue()->mouseButtonRelease(event->x() * m_scale, event->y() * m_scale, button);
+}
+
+void QtOSGWidget::keyReleaseEvent(QKeyEvent *event)
+{
+    releaseKeyboard();
+    if(event->key()==Qt::Key::Key_Space)
+    {
+        this->getEventQueue()->keyRelease(osgGA::GUIEventAdapter::KEY_Escape);
+    }
 }
 
 void QtOSGWidget::wheelEvent(QWheelEvent *event)
@@ -803,9 +850,73 @@ void QtOSGWidget::createChildAxis(
     m_root->addChild(tf);
 }
 
-void QtOSGWidget::loadHDMap(const HDMap *map)
+void QtOSGWidget::loadHDMap(HDMap *map)
 {
     m_map = map;
 }
 
+using namespace lanelet;
+void QtOSGWidget::drawLanelet()
+{
+    PointLayer &point_layer = ((m_map->map)->pointLayer);
+
+    size_t size = point_layer.size();
+    std::cout << "node size" << size << std::endl;
+
+    osg::Vec3 point;
+
+    for (auto i = point_layer.begin(); i != point_layer.end(); i++)
+    {
+        point.x() = i->x();
+        point.y() = i->y();
+        point.z() = i->z();
+        createSphere(point, 1.0, black);
+    }
+
+    Point3d aPoint = *point_layer.begin();
+    printf("point[%.3f,%.3f,%.3f], id[%d] \n", aPoint.x(), aPoint.y(), aPoint.z(), aPoint.id());
+
+    LaneletLayer &lane_layer = ((m_map->map)->laneletLayer);
+    size = lane_layer.size();
+    std::cout << "lane size" << size << std::endl;
+
+    LineString3d left, right;
+
+    size_t lane_num = 0;
+    for (auto i = lane_layer.begin(); i != lane_layer.end(); i++)
+    {
+        left = i->leftBound();
+        osg::Vec3Array *left_bound = new osg::Vec3Array(left.size());
+
+        std::cout << "left size" << left.size() << std::endl;
+        for (std::size_t j = 0; j < left.size(); j++)
+        {
+            left_bound->at(j)[0] = left[j].x();
+            left_bound->at(j)[1] = left[j].y();
+            left_bound->at(j)[2] = left[j].z();
+            printf("point[%.3f,%.3f,%.3f], id[%d] \n", left[j].x(), left[j].y(), left[j].z(),
+                    int32_t(j));
+        }
+        createLineList(m_base_tf, left_bound, white, 0.8);
+
+        right = i->rightBound();
+        osg::Vec3Array *right_bound = new osg::Vec3Array(right.size());
+        std::cout << "right size" << right.size() << std::endl;
+        for (std::size_t j = 0; j < right.size(); j++)
+        {
+            right_bound->at(j)[0] = right[j].x();
+            right_bound->at(j)[1] = right[j].y();
+            right_bound->at(j)[2] = right[j].z();
+            printf("point[%.3f,%.3f,%.3f], id[%d] \n", right[j].x(), right[j].y(), right[j].z(),
+                    int32_t(j));
+        }
+        createLineList(m_base_tf, right_bound, white, 1.0);
+
+        lane_num++;
+        // if (lane_num > 100)
+        // {
+        //     break;
+        // }
+    }
+}
 }  // namespace cat

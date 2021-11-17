@@ -47,6 +47,7 @@
 #include <osg/ref_ptr>
 #include <osgGA/EventQueue>
 #include <osgGA/TrackballManipulator>
+#include <osgGA/KeySwitchMatrixManipulator>
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/Viewer>
 #include <map.h>
@@ -78,7 +79,7 @@ private:
     osg::ref_ptr<osg::MatrixTransform> m_base_tf;
     osg::ref_ptr<osgGA::TrackballManipulator> m_manipulator;
 
-    const HDMap *m_map;
+    HDMap *m_map;
 
 public:
     QtOSGWidget(QWidget *parent = 0);
@@ -100,6 +101,12 @@ protected:
     virtual void wheelEvent(QWheelEvent *event);
 
     virtual bool event(QEvent *event);
+
+    /**
+     * Keyboard events
+     */
+    virtual void keyPressEvent(QKeyEvent *event);
+    virtual void keyReleaseEvent(QKeyEvent *event);
 
 public:
     osg::Geode *createArrowGeode(
@@ -164,7 +171,9 @@ public:
     void createGridPlane(osg::Transform *tf, const osg::Vec3 &center, const osg::Vec4 &color,
             const double &line_width, const double &width, const double &hight);
 
-    void loadHDMap(const HDMap *map);
+    void loadHDMap(HDMap *map);
+
+    void drawLanelet();
 
 private:
     osgGA::EventQueue *getEventQueue() const;

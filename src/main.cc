@@ -21,6 +21,7 @@ int main(int argc, char **argv)
     hd_map.init();
 
     widget->loadHDMap(&hd_map);
+    widget->drawLanelet();
 
     window.setCentralWidget(widget);
     window.show();

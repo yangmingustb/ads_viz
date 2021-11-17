@@ -15,10 +15,16 @@ find_package(Qt5OpenGL REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Gui REQUIRED)
 
+include_directories(
+    include
+    )
+
 
 add_library(viz_lib osg_utils.cc
                     viz.cc
-                    map.cc)
+                    map.cc
+                    osg_camera_control.cc
+                    )
 target_include_directories(viz_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(viz_lib PUBLIC Qt5::Widgets
                                 Qt5::Gui

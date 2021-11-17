@@ -1,9 +1,3 @@
-#include <lanelet2_io/Io.h>
-#include <lanelet2_io/io_handlers/BinHandler.h>
-#include <lanelet2_io/io_handlers/Factory.h>
-#include <lanelet2_io/io_handlers/OsmHandler.h>
-#include <lanelet2_io/io_handlers/Writer.h>
-#include <lanelet2_projection/UTM.h>
 #include <map.h>
 #include <cstdio>
 
@@ -31,7 +25,7 @@ void HDMap::init()
     projection::UtmProjector projector(Origin({49, 8.4}));  // we will go into details later
     lanelet::ErrorMessages errors;
     io::Configuration params;
-    LaneletMapPtr map = load(exampleMapPath, projector, &errors, params);
+    map = load(exampleMapPath, projector, &errors, params);
 
     printf("lanelet size[%d]\n", int32_t(map->laneletLayer.size()));
 
@@ -40,14 +34,15 @@ void HDMap::init()
     // we can also load and write into an internal binary format. It is not human readable but
     // loading is much faster than from .osm:
 
-    std::string file_name = generateTempFileName("map.bin");
-    std::cout << file_name << std::endl;
-    write(file_name, *map);  // we do not need a projector to write to bin
-    // if the map could not be parsed, exceptoins are thrown. Alternatively, you can provide an
-    // error struct. Then lanelet2 will load the map as far as possible and write all the errors
-    // that occured to the error object that you passed:
-    map = load(exampleMapPath, projector, &errors);
-    assert(errors.empty());  // of no errors occurred, the map could be fully parsed.
+    // std::string file_name = generateTempFileName("map.bin");
+    // std::cout << file_name << std::endl;
+    // write(file_name, *map);  // we do not need a projector to write to bin
+    // // if the map could not be parsed, exceptoins are thrown. Alternatively, you can provide an
+    // // error struct. Then lanelet2 will load the map as far as possible and write all the errors
+    // // that occured to the error object that you passed:
+    // map = load(exampleMapPath, projector, &errors);
+    // assert(errors.empty());  // of no errors occurred, the map could be fully parsed.
+    // printf("lanelet size[%d], initialized\n", int32_t(map->laneletLayer.size()));
 }
 
 std::string HDMap::generateTempFileName(const std::string& name)
